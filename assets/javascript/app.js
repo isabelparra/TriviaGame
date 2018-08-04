@@ -1,7 +1,8 @@
 $(document).ready(function (){
 $('#reset').hide();
 // $('#nextButton').hide();
-// $('#start').on('click', startGame);
+$('#start').on('click', startGame);
+$('#reset').on('click', startOver);
 
 
 
@@ -123,13 +124,13 @@ var userGuess = [];
     function runTimer(){
         if (!running) {
             intervalId = setInterval(decrement, 1000);
-            running = true;
-        }
-    }
+            // running = true;
+        };
+    };
 
         // timer countdown
     function decrement() {
-        timer --;
+        timer--;
         $('#time-left').html("Time Remaining: " + timer + " seconds ");
         
 
@@ -140,7 +141,7 @@ var userGuess = [];
             userGuess.length = 0;
 
             //record answer 
-            var userSelect = $('#choices input:radio[name=choicesRadios]:checked').val();
+            var userSelect = $('#answers input:radio[name=choicesRadios]:checked').val();
             // .each(function() {
             //     // var idVal = $(this).attr("id");
                 // alert($(''))
@@ -173,27 +174,30 @@ function stopTimer() {
 };
 
 function startGame() {
-    $('#start').on('click', function(event) {
+    // $('.start').append("<button id ='start'>" + "Start" + "</button>");
+    $('.start').on('click', function(event) {
         event.preventDefault();
 // replace button 
-$('#start').hide();
+$('.start').hide();
 // startOver();
 displayQ();
 resetTimer();
 $('#reset').show();
-$('#scoreboard').append('<h2>Score</h2><br><p>Number correct:'+ correct + '<br> Number wrong:' + incorrect + '<br>Unanswered: ' + unanswered + '</p>');
+// $('#scoreboard').append('<h2>Score</h2><br><p>Number correct:'+ correct + '<br> Number wrong:' + incorrect + '<br>Unanswered: ' + unanswered + '</p>');
 
   });
 };
 
 function submit() {
+    $('#submit').append('<button type="submit" class="btn btn-default">' + "Submit" + '</button>');
+    $('.start').hide();
     $('#submit').on('click', function(e) {
         e.preventDefault();
         userGuess.length = 0;
 
         // record answer
 
-        var userSelect = $('#choices input:radio[name=choicesRadios]:checked').val();
+        var userSelect = $('#answers input:radio[name=choicesRadios]:checked').val();
         // // .each(function() {
         // //     // var idVal = $(this).attr("id");
         //     // alert($(''))
@@ -208,21 +212,6 @@ function submit() {
 };
 
 
-
-// });
-// });
-
-//     time: 10, 
-//     lap: 1,
-// $('#time-left').text("00:10");
-
-// }
-
-// $('#reset').hide();
-
-// function submit() {
-//     $('#submit')
-// }
 
 
     // var questions = options.length;
@@ -309,28 +298,19 @@ function createRadios() {
 
 function displayQ() {
     
-    // clearQ();
+    clearQ();
     resetTimer();
     $('.question').html(questions[counter].prompt);
 
     createRadios();
-    $('#submit').append('<button type="submit" class="btn btn-default">' + "Submit" + '</button>');
+   
     runTimer();
     submit();
 };
 
- function clearQ() {
-    var submitDiv = $('#submit')
-    submitDiv.empty();
 
-     var results = $('#results');
-     results.empty();
 
-     
-  stopTimer();
 
-    //  var scoreboard = $('#sco')
- };
 
 
 
@@ -346,6 +326,7 @@ function checkQ() {
         $('#results').append('<h3> Congratulations! You chose the right answer! </h3>');
 
         correct++;
+        // userGuess='';
         console.log(correct);
         runTimer();
     }
@@ -356,6 +337,7 @@ function checkQ() {
     } else {
         $('#results').append('<h3> You chose the wrong answer.<br>The correct answer was: ' + questions[counter].choices[correctAnswer] + '</h3>');
         incorrect++;
+        // userGuess='';
         runTimer();
     };
     };
@@ -363,7 +345,6 @@ function checkQ() {
 
     function nextQ() {
       
-        event.preventDefault();
         checkQ();
         counter++;
       
@@ -395,18 +376,41 @@ function reset() {
     missed = 0;
     userGuess = [];
     resetTimer();
+    // $('#quizContainer').empty();
 };
 
 function startOver() {
   
-    clearQ();
+//     clearQ();
 $('#reset').on('click', function(event) {
     event.preventDefault();
     reset();
     clearQ();
+    startOver();
     startGame();
+    $('.start').show();
+    
+   
 });
 };
+
+function clearQ() {
+    var questionsDiv = $('.question');
+    questionsDiv.empty();
+
+    var submitDiv = $('#submit')
+    submitDiv.empty();
+
+     var results = $('#results');
+     results.empty();
+
+     var choicesDiv = $('#results');
+     choicesDiv.empty();
+
+  stopTimer();
+
+    //  var scoreboard = $('#sco')
+ };
 // function radioButtons(ary, qNum) {
 //     var answers = [];
 //     for (j = 0; j < ary.length; j++) {
