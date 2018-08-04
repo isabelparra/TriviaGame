@@ -47,44 +47,45 @@ var questions = [
     {
     prompt: "The oceans cover _____ of the Earth's surface.",
     choices: ["60 percent", "70 percent", "90 percent"],
-    answer: "70 percent",
+    answer: "1"
     },
      {
     prompt: "Which ocean is the largest?",
     choices: ["Pacific Ocean", "Atlantic Ocean", "Indian Ocean"],
-    answer: "1",
+    answer: "0"
     },
      {
     prompt: "Which ocean basin is the most geologically active?",
     choices: ["Pacific Ocean", "Atlantic Ocean", "Indian Ocean"],
-    answer: "1",
+    answer: "0"
     },
      {
     prompt: "How does water move around the world?",
     choices: ["Wind", "Gravity", "Both of the above"],
-    answer: "3",
+    answer: "2"
     },
      {
     prompt: "Ocean water moves: ",
     choices: ["From North to South", "From South to North", "In a circular pattern"],
-    answer: "3",
+    answer: "2"
     },
      {
     prompt: "What are thermohaline currents?",
     choices: ["cold water currents from the arctic", "warm water currents from Africa", "currents that move up and down in the ocean"],
-    answer: "3",
+    answer: "2",
      },
     {
     prompt: "What type of water is more dense?",
     choices: ["polar, cold water", "equator, hot water", "water close to the shore"],
-    answer: "1",
+    answer: "0"
     }];
+
 // variable to track question
-var counter = questions.length;
+var counter = 0;
 // score variables
 var correct = 0;
 var incorrect = 0;   
-var missed = 0; 
+var unanswered = 0; 
 // var current = questions.length;
 var holder = [];
 
@@ -99,7 +100,7 @@ var userGuess = [];
     // prevents clock from being sped up 
     var running = false;
 
-var pick;
+// var pick;
 // var questionNumber;
 // var holder = [];
 // var trivia = {
@@ -114,22 +115,6 @@ var pick;
 // // $('#start').on('click', (trivia) {
     // start: function() {
 
-    //     if (!running) {
-    //         intervalId = setInterval(decrement, 1000);
-    //         running = true;
-    //     }
-    // }
-    //   function startGame() {
-        $('#start').on('click', function() {
-// //     // remove start button
-$('#start').hide();
-reset();
-displayQ();
-$('#reset').show();
-
-
-
-      });
     // for (var i = 0; i < questions.length; i++) {
     //     holder.push(questions[i]);
 //     });
@@ -145,28 +130,82 @@ $('#reset').show();
         // timer countdown
     function decrement() {
         timer --;
-        $('#time-left').html("<h3>Time Remaining: " + timer + " seconds </h3>");
+        $('#time-left').html("Time Remaining: " + timer + " seconds ");
         
 
 //         // stop timer if it reaches 0
         if (timer === 0) {
             stopTimer();
-            counter++;
+            unanswered++;
             userGuess.length = 0;
-            $('#results').html("<p>Time is up! The correct answer is: " + pick.questions[pick.answer] + "</p>");
+
+            //record answer 
+            var userSelect = $('#choices input:radio[name=choicesRadios]:checked').val();
+            // .each(function() {
+            //     // var idVal = $(this).attr("id");
+                // alert($(''))
+         
+            userGuess.push(userSelect);
+            console.log(userGuess);
+            nextQ();
+            // $('#results').html("<p>Time is up! The correct answer is: " + pick.questions[pick.answer] + "</p>");
     
-        }
-}
+        };
+};
 
 function resetTimer() {
     timer = 10;
+    // runTimer();
     // $('#time-left').html
-}
+    // $("#time-left").text("00:10");
+    $('#time-left').html("Time Remaining: " + timer + " seconds");
+    
+};
+
+// function displayTimer() {
+//     $('#time-left').html("Time Remaining: " + timer + " seconds");
+// }
 // // stop
 function stopTimer() {
-    runnning = false;
+    // runnning = false;
     clearInterval(intervalId);
-}
+    // nextQ();
+};
+
+function startGame() {
+    $('#start').on('click', function(event) {
+        event.preventDefault();
+// replace button 
+$('#start').hide();
+// startOver();
+displayQ();
+resetTimer();
+$('#reset').show();
+$('#scoreboard').append('<h2>Score</h2><br><p>Number correct:'+ correct + '<br> Number wrong:' + incorrect + '<br>Unanswered: ' + unanswered + '</p>');
+
+  });
+};
+
+function submit() {
+    $('#submit').on('click', function(e) {
+        e.preventDefault();
+        userGuess.length = 0;
+
+        // record answer
+
+        var userSelect = $('#choices input:radio[name=choicesRadios]:checked').val();
+        // // .each(function() {
+        // //     // var idVal = $(this).attr("id");
+        //     // alert($(''))
+     
+        userGuess.push(userSelect);
+
+        console.log(userGuess);
+        nextQ();
+        // stopTimer();
+
+    });
+};
 
 
 
@@ -258,45 +297,96 @@ function stopTimer() {
     // for (let j = 0; j < questions[i].answer.length; j++) {
     //     $('#question').append("<h3><input type='radio' name='question'" + i + "value=" + questions[i].answer[j]);
     // }
-    function submit() {
-        $('#submit').on('click', function(e) {
-            e.preventDefault();
-            userGuess.length = 0;
-    
-            var userSelect = $('input[type="radio"]:checked').each(function() {
-                var idVal = $(this).attr("id");
-                alert($(''))
-            })
-            userGuess.push(userSelect);
-            console.log(userGuess);
-            nextQ();
-    
-        });
-    };
+
 function createRadios() {
-    var multipleChoice = $('.choices');
+    var multipleChoice = $('#choices');
     multipleChoice.empty();
+    // var userGuess = [];
     for (var i = 0; i < questions[counter].choices.length; i++) {
-        multipleChoice.append('<label><input type="radio" name="choices" value="' + [i] + '"><div>' + questions[counter].choices[i] + '</div></input><br></label>');
+        multipleChoice.append('<label><input type="radio" name="choicesRadios" value="' + [i] + '"><div>' + questions[counter].choices[i] + '</div></input><br></label>');
 };
 };
+
 function displayQ() {
-    // clearQuestion();
+    
+    // clearQ();
     resetTimer();
     $('.question').html(questions[counter].prompt);
+
     createRadios();
-    $('.submit').append('<button type="submit" class="btn btn-default" id="submit">' + "Submit" + '</button>');
+    $('#submit').append('<button type="submit" class="btn btn-default">' + "Submit" + '</button>');
     runTimer();
     submit();
 };
 
+ function clearQ() {
+    var submitDiv = $('#submit')
+    submitDiv.empty();
+
+     var results = $('#results');
+     results.empty();
+
+     
+  stopTimer();
+
+    //  var scoreboard = $('#sco')
+ };
 
 
-function nextQ() {
-    counter++;
-    setTimeout(displayQ);
 
-};
+function checkQ() {
+
+    clearQ();
+
+    var correctAnswer = questions[counter].answer;
+    // if($('input[name=choiceRadios]:checked').val() == questions[counter].answer) {
+    //     correct++;
+      
+  if (userGuess[0] == questions[counter].answer) {
+        $('#results').append('<h3> Congratulations! You chose the right answer! </h3>');
+
+        correct++;
+        console.log(correct);
+        runTimer();
+    }
+        else if (userGuess[0] === undefined) {
+    $('#results').append('<h3> Time is up! </h3><br><br> The correct answer was: ' + questions[counter].choices[correctAnswer] + '</h3>');
+        unanswered++;
+        runTimer();
+    } else {
+        $('#results').append('<h3> You chose the wrong answer.<br>The correct answer was: ' + questions[counter].choices[correctAnswer] + '</h3>');
+        incorrect++;
+        runTimer();
+    };
+    };
+
+
+    function nextQ() {
+      
+        event.preventDefault();
+        checkQ();
+        counter++;
+      
+        // setTimeout(displayQ);
+        // $('#submit').empty();
+        if (counter === questions.length) {
+            setTimeout(startOver, timer);
+        } else {
+            setTimeout(displayQ, timer);
+        };
+
+
+        // runTimer();
+        // displayQ();
+    
+        // console.log('Next Question');
+    
+    };
+//         console.log(userGuess);
+//         console.log(answer);
+//     };
+// };
+
 
 function reset() {
     counter = 0;
@@ -305,7 +395,18 @@ function reset() {
     missed = 0;
     userGuess = [];
     resetTimer();
-}
+};
+
+function startOver() {
+  
+    clearQ();
+$('#reset').on('click', function(event) {
+    event.preventDefault();
+    reset();
+    clearQ();
+    startGame();
+});
+};
 // function radioButtons(ary, qNum) {
 //     var answers = [];
 //     for (j = 0; j < ary.length; j++) {
@@ -347,7 +448,7 @@ function reset() {
     // $('#results').empty().hide();
 
 
-
+startGame();
 
 
 });
