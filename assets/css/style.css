@@ -1,6 +1,6 @@
 body {
     background-image: url('https://img1.cgtrader.com/items/785419/e89506d46b/cartoon-underwater-ship-scene-3d-model-obj-fbx-ma-mb-mtl-tga.jpg');
-    font-family: Arial, Helvetica, sans-serif;
+    /* font-family: Arial, Helvetica, sans-serif; */
     font-size: 18px;
     line-height: 34px;
     color: #777777;
@@ -13,25 +13,57 @@ body {
 /* questions */
 
 .container {
-    background-color: lightblue;
+    
+}
+.startDiv {
     text-align: center;
     margin: auto;
-    max-width: 760px;
+    background-color: #1c2e4f;
+    opacity: 0.75;
+    max-width: 760px; 
+    padding: 20px;
 }
 
-h1 {
-    color: purple;
-    padding: 20px;
-   
+#startButton {
+
+}
+
+#quizContainer {
+    background-color: #1c2e4f;
+    opacity: 0.75;
+    max-width: 760px;
+    text-align: center;
+    margin: auto;
+}
+
+header {
+    text-align: center;
+    background-color: #1c2e4f;
+    color: white;
+    font-family: 'Archivo Black', cursive;
+    padding: 15px;
+    font-size: 32px;
 }
 
 h3 {
     font-size: 12px;
-
 }
 
-label {
+#time-left {
+    color: white;
+    font-family: 'Work Sans', sans-serif;
+}
+.question, #choices, h2  {
+    font-family: 'Roboto', sans-serif;
+    color: white;
+}
+
+/* #choices {
+    font-family: 'Roboto', sans-serif;
+} */
+
+/* label {
     /* float: left; */
-    display: inline-block;
+    /* display: inline-block;
     padding: 25px;
-}
+} */ 

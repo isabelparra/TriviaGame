@@ -6,46 +6,49 @@
     <meta charset="UTF-8">
     <title>Trivia Game</title>
     <link rel='stylesheet' href-'assets/css/reset.css'>
-    <link rel='stylesheet' type='text/css' href='assets/css/style.css'> 
+    <link rel='stylesheet' type='text/css' href='assets/css/style.css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Open+Sans:600|Roboto|Work+Sans:600" rel="stylesheet">
 </head>
 
 <body>
-        <h2>Totally Trivial Trivia</h2>
-   
-        <div class='container'>
-        <button class=' start'>Start Game</button><br>
-    </div>
-        <div id='quizContainer' class='container'>
-            <div id='time-left'></div>
-            <div class="question"></div>
+    <div class='startDiv'>
+        <header>TOTALLY TRIVIAL TRIVIA</header>
+        <button id='startButton' class='btn btn-light'>Start Game</button>
+   </div>
+      
+    <div id='quizContainer' class='container'>
+        <div id='time-left'></div>
+        <div id="question"></div>
             <!-- <div class='choices'></div> -->
-            <div id='choices'></div>
+        <div id='choices'></div>
             
             <!-- <label class='option'><input name='option' value='1' /><span id='opt1'></span></label>
             <label class='option'><input name='option' value='2' /><span id='opt2'></span></label>
             <label class='option'><input name='option' value='3' /><span id='opt3'></span></label>
             <label class='option'><input name='option' value='4' /><span id='opt4'></span></label> -->
-            
-            <div id="results"></div>
-            <div id="submit"></div>
+         
+        <div id="results"></div>
+        <div id="submit"></div>
 
 
-            <div id='scoreboard'></div>
+        <div id='scoreboard'></div>
 
-            <button class='btn btn-success' id="reset">Play Again?</button>
+        <button class='btn btn-success' id="reset">Play Again?</button>
     </div>
 
     
-    
-
-   
 
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- Script -->
     <script type="text/javascript" src="assets/javascript/app.js"></script>
-    
+
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+     -->
 </body>
 
 </html>
