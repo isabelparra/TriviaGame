@@ -10,46 +10,46 @@ var intervalId;
 // attempted: 0,
 // timer: 10
 // };
-right= 0;
-wrong= 0;
-attempted= 0;
+var right= 0;
+var wrong= 0;
+var attempted= 0;
 
 // All quiz questions 
 var questions = [
     {
     prompt: "The oceans cover _____ of the Earth's surface.",
     choices: ["60 percent", "70 percent", "90 percent"],
-    answer: 1
+    answer: "1"
     },
      {
     prompt: "Which ocean is the largest?",
     choices: ["Pacific Ocean", "Atlantic Ocean", "Indian Ocean"],
-    answer: 0
+    answer: "0"
     },
      {
     prompt: "Which ocean basin is the most geologically active?",
     choices: ["Pacific Ocean", "Atlantic Ocean", "Indian Ocean"],
-    answer: 0
+    answer: "0"
     },
      {
     prompt: "How does water move around the world?",
     choices: ["Wind", "Gravity", "Both of the above"],
-    answer: 2
+    answer: "2"
     },
      {
     prompt: "Ocean water moves: ",
     choices: ["From North to South", "From South to North", "In a circular pattern"],
-    answer: 2
+    answer: "2"
     },
      {
     prompt: "What are thermohaline currents?",
     choices: ["cold water currents from the arctic", "warm water currents from Africa", "currents that move up and down in the ocean"],
-    answer: 2
+    answer: "2"
      },
     {
     prompt: "What type of water is more dense?",
     choices: ["polar, cold water", "equator, hot water", "water close to the shore"],
-    answer: 0
+    answer: "0"
     }];
 
 
@@ -77,6 +77,7 @@ var timer = 10;
 // var running = false;
 
 $('#reset').hide();
+$('#next').hide();
 
 $('#startButton').on('click', startGame);
 
@@ -85,6 +86,8 @@ $('#startButton').on('click', startGame);
 function startGame() {
     $('#startButton').hide();
     displayQ();
+    $('#reset').show();
+    // $('#submit').append('<button type="submit" id="submit" class="btn btn-default">' + "Submit" + '</button>'); 
     // runTimer();
     // for (i = 0; i < questions.length; i ++) {
     //     question.push(questions[i]);
@@ -108,21 +111,20 @@ function startGame() {
 
 function displayQ() {
     
-    $('#reset').show(); 
-
-    if (counter <= 7 ) {
-    runTimer();
-    $('#submit').append('<button type="submit" id="submit" class="btn btn-default">' + "Submit" + '</button>');
-  
+    
+    // if (counter <= 7 ) {
+    
+   
+    // $('#next').hide();
     // resetTimer();
  
     index = Math.floor(Math.random()*questions.length);
     current = questions[index];
-
+    runTimer();
     // for (i = 0; i < questions.length; i ++) {
-    $('#question').html('<h2>' + current.prompt + '</h2>');
+    $('#question').html(current.prompt);
         // $('#results'+ i).append(questions[i].prompt)
-        // answers = questions[i].choices;
+    // answers = questions[i].choices;
 
         for (var j = 0; j < current.choices.length; j++) {
         // createRadios();
@@ -133,7 +135,9 @@ function displayQ() {
             userChoice.addClass('choices');
             userChoice.html(current.choices[j]);
             userChoice.attr('data-guessvalue', j);
-         $('#choices').append('<label><input type="radio" name="choicesRadios" value="' + [j] + '"><div>' + current.choices[j] + '</div></input><br></label>');
+         $('#choices').append('<label><input type="radio" name="choicesRadios" value="' + [j] + '"><div>' + current.choices[j] + '</div></input></label>');
+         $('#submit').html('<button type="submit" id="submit" class="btn btn-default">' + "Submit" + '</button>');
+
             //  '<label><input type="radio" name="choices" value="' + [i] + '"><div>' + questions[counter].choices[i] + '</div></input><br></label>');
         
             //  '<input type="radio" name="choicesRadios"' + i + '" value="' + [j] + '">' + questions[i].choices[j] + '</input>');
@@ -160,7 +164,7 @@ function displayQ() {
     // } else {
     //     alert('game over');
     // }
-            };
+        // };
          }; 
         };
     
@@ -176,7 +180,7 @@ function displayQ() {
 
 // Function to start timer    
 function runTimer(){
-    $('#time-left').html("Time Remaining: " + timer + " seconds ");
+    $('#time-left').html("Time Remaining: " + timer + " seconds");
     intervalId = setInterval(decrement, 1000);
     
     
@@ -194,7 +198,7 @@ function runTimer(){
 function decrement() {
     timer--;
 
-    $('#time-left').html("Time Remaining: " + timer + " seconds ");
+    $('#time-left').html("Time Remaining: " + timer + " seconds");
     
     // stop timer if it reaches 0
     if (timer === 0) {
@@ -238,20 +242,34 @@ runTimer();
 
 $('#submit').on('click', submit);
 
+
 function submit() {
-    userGuess = parseInt($(this).attr('data-guessvalue'));
+    var userGuess = parseInt($(this).attr('data-guessvalue'));
+    // var buttonRow = radios.charAt(8).trim();
+    // var userGuess = ('input:checked').val().trim();
+    // var userGuess = $('#choices input:radio[name=choicesRadios]:checked').val();
+    console.log({userGuess});
     if (userGuess === current.answer) {
         stop();
         right++;
-        userGuess= '';
-        $('#results').html('<p>Correct!</p>');
+        $('#results').html('Correct!');
+        
+        $('#next').show(); 
+        $('#submit').hide();
+        
     } else {
         stop();
         wrong++;
         userGuess='';
-        $('#results').html('<p>Wrong!</p>');
+       
+       $('#next').show(); 
+       $('#submit').hide();
+        $('#results').html('The correct answer is ' + current.choices[current.answer]);
+        
     }
 
+
+    
 //     // $('#submit').on('click', function(e) {
 //         // e.preventDefault();
 //         // userGuess.length = 0;
@@ -343,28 +361,36 @@ function submit() {
 //     };
 //     };
 
+$('#next').on('click', next);
 
-// function nextQ() {
-//     counter++;  
+function next() {
+    $('#submit').show();
+    $('#next').hide();
+    clearQ();
+    // resetTimer();
+    counter++;  
+    // $('#submit').html('<button type="submit" id="submit" class="btn btn-default">' + "Submit" + '</button>');
 
-//     // checkQ();
-// //         // setTimeout(displayQ);
-// //         // $('#submit').empty();
-// //     // if (counter === questions.length) {
-// //     // setTimeout(startOver, timer);
-// //     // } else {
-// //     // setTimeout(displayQ, timer);
-// //     // };
+
+// //     // checkQ();
+// // //         // setTimeout(displayQ);
+// // //         // $('#submit').empty();
+// // //     // if (counter === questions.length) {
+// // //     // setTimeout(startOver, timer);
+// // //     // } else {
+// // //     // setTimeout(displayQ, timer);
+// // //     // };
 
        
-//         displayQ();
-//         runTimer();
-// //         // console.log('Next Question');
+        displayQ();
+        
+// //         runTimer();
+// // //         // console.log('Next Question');
 // //     };
-// //         console.log(userGuess);
-// //         console.log(answer);
-// //     };
-// };
+// // //         console.log(userGuess);
+// // //         console.log(answer);
+// // //     };
+ };
 
 
 // function reset() {
@@ -394,7 +420,7 @@ function submit() {
 
 function clearQ() {
     
-    var questionsDiv = $('.question');
+    var questionsDiv = $('#question');
     questionsDiv.empty();
 
     var choicesDiv = $('#choices');
