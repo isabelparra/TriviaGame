@@ -117,7 +117,8 @@ function displayQ() {
    
     // $('#next').hide();
     // resetTimer();
- 
+    $('#submit').html('<button type="submit" id="submit" class="btn btn-default">' + "Submit" + '</button>');
+
     index = Math.floor(Math.random()*questions.length);
     current = questions[index];
     runTimer();
@@ -136,8 +137,7 @@ function displayQ() {
             userChoice.html(current.choices[j]);
             userChoice.attr('data-guessvalue', j);
          $('#choices').append('<label><input type="radio" name="choicesRadios" value="' + [j] + '"><div>' + current.choices[j] + '</div></input></label>');
-         $('#submit').html('<button type="submit" id="submit" class="btn btn-default">' + "Submit" + '</button>');
-
+         
             //  '<label><input type="radio" name="choices" value="' + [i] + '"><div>' + questions[counter].choices[i] + '</div></input><br></label>');
         
             //  '<input type="radio" name="choicesRadios"' + i + '" value="' + [j] + '">' + questions[i].choices[j] + '</input>');
@@ -166,6 +166,7 @@ function displayQ() {
     // }
         // };
          }; 
+         
         };
     
       
@@ -207,6 +208,7 @@ function decrement() {
         // checkQ();
         resetTimer();
         submit();
+        next();
         // userGuess.length = 0;
 
         //record answer 
@@ -267,99 +269,10 @@ function submit() {
         $('#results').html('The correct answer is ' + current.choices[current.answer]);
         
     }
-
-
-    
-//     // $('#submit').on('click', function(e) {
-//         // e.preventDefault();
-//         // userGuess.length = 0;
-        
-//         // record answer
-//   var userSelect = $('#choices input:radio[name=choicesRadios]:checked').val();
-// //         // .each(function() {
-// //       // var idVal = $(this).attr("id");
-// //         // alert($(''))
-//          userGuess.push(userSelect);
-//         console.log(userGuess);
-// //         resetTimer();
-//    displayQ();
-        
-
    
 };
 
 
-
-// function createRadios() {
-//     // var multipleChoice = $('#choices');
-//     //    multipleChoice.empty();
-
-// //         // var userGuess = [];
-//     for (var j = 0; j < questions[counter].choices.length; j++) {
-//         var multipleChoice = $('<div>');
-//         multipleChoice.addClass('answerChoices');
-//         multipleChoice.html(questions[counter].choices[i]);
-//         multipleChoice.attr('data-guess', i);
-//         multipleChoice.append('<label><input type="radio" name="choicesRadios"' + [i] + '"><div>' + questions[counter].choices[i] + '</div></input><br></label>');
-// // //         // multipleChoice.append('<label><input type="radio" name="choicesRadios" value="' + [i] + '"><div>' + questions[counter].choices[i] + '</div></input><br></label>');
-//     };
-// //     // answers = questions[counter].choices;
-// //     // var correctAnswer = questions[counter].answer;
-// // //      for (var i = 0; i < answers.length; i++) {
-
-// // //         $('#results' + i).html('<h3>' + answers[i] + '</h3>' );
-// // // // //         multipleChoice.attr('data-guess', i);
-// // // // //         multipleChoice.append('<label><input type="radio" name="choicesRadios"' + [i] + '"><div>' + questions[counter].choices[i] + '</div></input><br></label>');
-// // // // //         // multipleChoice.append('<label><input type="radio" name="choicesRadios" value="' + [i] + '"><div>' + questions[counter].choices[i] + '</div></input><br></label>');
-//     };
-// };    
-    
-    // multipleChoice.empty();
-    // var userGuess = [];
-//     for (var i = 0; i < question.choices.length; i++) {
-//         var multipleChoice = $('<div>');
-//         multipleChoice.addClass('answerChoices');
-//         multipleChoice.html(question.choices[i]);
-//         multipleChoice.attr('data-guess', i);
-//         multipleChoice.append('<label><input type="radio" name="choicesRadios"' + [i] + '"><div>' + questions[counter].choices[i] + '</div></input><br></label>');
-//         // multipleChoice.append('<label><input type="radio" name="choicesRadios" value="' + [i] + '"><div>' + questions[counter].choices[i] + '</div></input><br></label>');
-//     };
-// };
-
-
-
-// function checkQ() {
-
-//     // clearQ();
-
-//     var correctAnswer = questions[counter].answer;
-
-// // $.each($('input[name=choiceRadios]:checked'), function() {
-// //        if ($(this).val() === questions[0].answer) {
-// //            correct++;
-// //        } else { }
-// //     // .val() == questions[counter].answer) {
-// //         incorrect++;
-      
-//   if (userGuess[0] == questions[counter].answer) {
-//         $('#results').append('<h3> Congratulations! You chose the right answer! </h3>');
-
-//         correct++;
-//         // userGuess='';
-//         console.log(correct);
-//         runTimer();
-//     }
-//         else if (userGuess[0] === undefined) {
-//     $('#results').append('<h3> Time is up! </h3><br><br> The correct answer was: ' + questions[counter].choices[correctAnswer] + '</h3>');
-//         unanswered++;
-//         runTimer();
-//     } else {
-//         $('#results').append('<h3> You chose the wrong answer.<br>The correct answer was: ' + questions[counter].choices[correctAnswer] + '</h3>');
-//         incorrect++;
-//         // userGuess='';
-//         runTimer();
-//     };
-//     };
 
 $('#next').on('click', next);
 
@@ -367,41 +280,23 @@ function next() {
     $('#submit').show();
     $('#next').hide();
     clearQ();
-    // resetTimer();
-    counter++;  
-    // $('#submit').html('<button type="submit" id="submit" class="btn btn-default">' + "Submit" + '</button>');
-
-
-// //     // checkQ();
-// // //         // setTimeout(displayQ);
-// // //         // $('#submit').empty();
-// // //     // if (counter === questions.length) {
-// // //     // setTimeout(startOver, timer);
-// // //     // } else {
-// // //     // setTimeout(displayQ, timer);
-// // //     // };
-
-       
-        displayQ();
-        
-// //         runTimer();
-// // //         // console.log('Next Question');
-// //     };
-// // //         console.log(userGuess);
-// // //         console.log(answer);
-// // //     };
+    counter++; 
+    displayQ();
+    
  };
 
-
-// function reset() {
-//     counter = 0;
-//     correct = 0; 
-//     incorrect = 0;
-//     missed = 0;
-//     userGuess = [];
-//     resetTimer();
-//     // $('#quizContainer').empty();
-// };
+$('#reset').on('click', reset);
+function reset() {
+    clearQ();
+    counter = 0;
+    right = 0; 
+    wrong = 0;
+    attempted   = 0;
+    userGuess = [];
+    resetTimer();
+    startGame();
+    // $('#quizContainer').empty();
+};
 
 // function startOver() {
   
@@ -435,51 +330,4 @@ function clearQ() {
  
 
 };
-
-//   resetTimer();
-
-//     //  var scoreboard = $('#sco')
-//  };
-// function radioButtons(ary, qNum) {
-//     var answers = [];
-//     for (j = 0; j < ary.length; j++) {
-//         answers.push('<label><input type="radio" name="' + qNum + '" value="' + ary[i] + '">' + ary[i] + '</label>');
-//     }
-//     return answers.join(" ");
-// }
-// $('#question').append("<button id='submit'>Done</button>");
-
-//         var a = $('<button>');
-//     a.addClass('btn-answer');
-//     a.data('name', questions[i].answer[j]);
-//     a.text(questions[i].answer[j]);
-//  $('#choices').append(a);
-//     }
-//     };
-        // "<form id=" + i + 'class="center-text"><p>Question ' + (i + 1) + ' of ' + questions.length + '</p><h3 class="questions">' + questions[i].prompt + '</h3>' + '<button type="submit" class="next">NEXT</button></p></form>' );
-    // $('.results').html('');
-//     // runTimer();
- 
-    // if (correct + incorrect >= gameLength) {
-    //     gameOver();
-    // } else {
-    // questionNumber = Math.floor(Math.random() * questions.length);
-    // pick = questions[questionNumber];
-    // $('#question').html("<h2>"+ pick.prompt + "</h2>");
-      
-//     for (var i = 0; i < pick.choices.length; i++) {
-//         var userChoice = $("<div>");
-//         userChoice.addClass("answer-choice");
-//         userChoice.html(pick.choices[i]);
-
-//         userChoice.attr("data-guessvalue", i);
-//         $("#results").append(userChoice);
-//     }
-// };
-// }
-    // resetTimer();
-    // $('#results').empty().hide();
-
-
-// };
 
