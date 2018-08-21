@@ -10,6 +10,7 @@ var intervalId;
 // attempted: 0,
 // timer: 10
 // };
+
 var right= 0;
 var wrong= 0;
 var attempted= 0;
@@ -53,41 +54,32 @@ var questions = [
     }];
 
 
+// Variable to track question
+var counter = 0;
 
-var answers = [];
-
-// var current = 0;
-var current ;
+var current;
 //  var holder = [];
 
- var question = [];
-var counter = 0;
 var index;
 var userGuess = [];
 
 // Sets timer counter to 10
 var timer = 10;
 
-
-
-// // Variable to track question
-// var counter = 0;
-
 // prevents clock from being sped up 
-// var running = false;
+var running = false;
 
 $('#reset').hide();
 $('#next').hide();
-
 $('#startButton').on('click', startGame);
-
-// $('#reset').on('click', timer.reset);
+$('#reset').on('click', reset);
+$('#next').on('click', next);
 
 function startGame() {
     $('#startButton').hide();
     displayQ();
     $('#reset').show();
-    // $('#submit').append('<button type="submit" id="submit" class="btn btn-default">' + "Submit" + '</button>'); 
+    
     // runTimer();
     // for (i = 0; i < questions.length; i ++) {
     //     question.push(questions[i]);
@@ -110,14 +102,10 @@ function startGame() {
 
 
 function displayQ() {
-    
-    
     // if (counter <= 7 ) {
-    
-   
     // $('#next').hide();
-    // resetTimer();
-    $('#submit').html('<button type="submit" id="submit" class="btn btn-default">' + "Submit" + '</button>');
+    resetTimer();
+    $('#submit').append('<button type="submit" id="submit" class="btn btn-default">' + "Submit" + '</button>'); 
 
     index = Math.floor(Math.random()*questions.length);
     current = questions[index];
@@ -125,42 +113,15 @@ function displayQ() {
     // for (i = 0; i < questions.length; i ++) {
     $('#question').html(current.prompt);
         // $('#results'+ i).append(questions[i].prompt)
-    // answers = questions[i].choices;
 
         for (var j = 0; j < current.choices.length; j++) {
         // createRadios();
-        
-            // $('<input id="answers" class="radio" type="radio" ' + i + '"value="' + j + '">' + questions[i].choices[j] + '</input>').appendTo('#question' + i);
             var userChoice = $('<div>');
-            
             userChoice.addClass('choices');
             userChoice.html(current.choices[j]);
             userChoice.attr('data-guessvalue', j);
          $('#choices').append('<label><input type="radio" name="choicesRadios" value="' + [j] + '"><div>' + current.choices[j] + '</div></input></label>');
          
-            //  '<label><input type="radio" name="choices" value="' + [i] + '"><div>' + questions[counter].choices[i] + '</div></input><br></label>');
-        
-            //  '<input type="radio" name="choicesRadios"' + i + '" value="' + [j] + '">' + questions[i].choices[j] + '</input>');
-// userChoice.append('<label><input type="radio" class="answerChoice" name="choicesRadios" value="' + [j] + '"><div>' + questions[i].choices[j] + '</div></input><br></label>');
-      
-
-  
-       // for (var i = 0; i < answers.length; i++) {
-
-        //     $('#results' + i).html('<h3>' + answers[i] + '</h3>' );
-        // show('.choices');
-        //     for (var i = 0; i < answers.length; i++) {
-        // $('#results' + i).html('<h3>' + answers[i] + '</h3>' );
-//     for (var i = 0; i < .length; i++) {
-//         var multipleChoice = $('<div>');
-//         multipleChoice.addClass('answerChoices');
-//         multipleChoice.html(answers[i]);
-//         multipleChoice.attr('data-guess', i);
-//         multipleChoice.append('<label><input type="radio" name="choicesRadios"' + [i] + '"><div>' + questions[counter].choices[i] + '</div></input><br></label>');
-// //         // multipleChoice.append('<label><input type="radio" name="choicesRadios" value="' + [i] + '"><div>' + questions[counter].choices[i] + '</div></input><br></label>');
-//     }; 
-    
-    
     // } else {
     //     alert('game over');
     // }
@@ -169,15 +130,6 @@ function displayQ() {
          
         };
     
-      
-    // index = Math.floor(Math.random()*questions.length);
-    // question = questions[index];
-
-//     $('.question').html(question.prompt);
-//     createRadios();
-//     $('#submit').append('<button type="submit" class="btn btn-default">' + "Submit" + '</button>');
-//     $('#reset').show();
-// };
 
 // Function to start timer    
 function runTimer(){
@@ -237,8 +189,7 @@ function stop() {
 function resetTimer() {
 clearInterval(intervalId);
 timer = 10;
-runTimer();
-    // displayQ();
+// runTimer();
 };
 
 
@@ -255,45 +206,40 @@ function submit() {
         stop();
         right++;
         $('#results').html('Correct!');
-        
         $('#next').show(); 
         $('#submit').hide();
-        
     } else {
         stop();
         wrong++;
         userGuess='';
-       
        $('#next').show(); 
        $('#submit').hide();
-        $('#results').html('The correct answer is ' + current.choices[current.answer]);
-        
+        $('#results').html('The correct answer is ' + current.choices[current.answer]);  
     }
    
 };
 
-
-
-$('#next').on('click', next);
-
 function next() {
+    clearQ();
+    displayQ();
     $('#submit').show();
     $('#next').hide();
-    clearQ();
+   
     counter++; 
-    displayQ();
+    
     
  };
 
-$('#reset').on('click', reset);
+
 function reset() {
-    clearQ();
+
     counter = 0;
     right = 0; 
     wrong = 0;
-    attempted   = 0;
+    attempted  = 0;
     userGuess = [];
-    resetTimer();
+    // resetTimer();
+    clearQ();
     startGame();
     // $('#quizContainer').empty();
 };
@@ -326,8 +272,5 @@ function clearQ() {
 
      var results = $('#results');
      results.empty();
-
- 
-
 };
 
